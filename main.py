@@ -82,7 +82,7 @@ class BasicFit:
         # Ask for the time
         self.ask_for_time()
         #
-        if self.make_reservation == "y":
+        if self.auto_reservation == "y":
             self.post_reservation()
 
         import tkinter.messagebox
