@@ -82,11 +82,12 @@ class BasicFit:
         # Ask for the time
         self.ask_for_time()
         #
+        print("{} - Slot found!".format(datetime.now().strftime("%H:%M:%S")))
         if self.auto_reservation == "y":
             self.post_reservation()
 
         import tkinter.messagebox
-        tkinter.messagebox.showinfo("Notice", "Slot available!")
+        tkinter.messagebox.showinfo("Notice", "Slot found!")
 
     def ask_for_time(self):
         """ Asks the user for time """
