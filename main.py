@@ -8,6 +8,11 @@ import requests
 
 
 class BasicFit:
+    # Settings
+    retrySeconds = 20
+
+    auto_reservation = None
+
     # Authentication
     cookie = ""
     user = None
@@ -38,6 +43,8 @@ class BasicFit:
     open_reservation_url = "https://my.basic-fit.com/door-policy/get-open-reservation"
 
     def __init__(self, username, password, club, time):
+        self.auto_reservation = self.auto_reservation if self.auto_reservation else input("Make reservation automatically? (y/n): ")
+
         #  Add arguments
         self.username = username
         self.password = password
@@ -75,7 +82,8 @@ class BasicFit:
         # Ask for the time
         self.ask_for_time()
         #
-        # self.post_reservation()
+        if self.make_reservation == "y":
+            self.post_reservation()
 
         import tkinter.messagebox
         tkinter.messagebox.showinfo("Notice", "Slot available!")
@@ -99,7 +107,7 @@ class BasicFit:
 
     def time_unavailable(self):
         #
-        print("Timeslot is full, I will retry every 30 seconds.")
+        print("Timeslot is full, I will retry every {} seconds.".format(self.retrySeconds))
 
         self.pref_diff = int(input("How many slots?: "))
 
@@ -142,8 +150,8 @@ class BasicFit:
                     self.reserve_at = basicSlot
                     return True
 
-        print('All full.. Retrying in 30 seconds.')
-        time.sleep(30)
+        print('All full.. Retrying in {} seconds.'.format(self.retrySeconds))
+        time.sleep(self.retrySeconds)
 
         self.book_loop()
 
