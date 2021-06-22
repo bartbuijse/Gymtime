@@ -1,9 +1,10 @@
-import json
 import argparse
-import requests
+import json
+import time
 from datetime import datetime
 from datetime import timedelta
-import time
+
+import requests
 
 
 class BasicFit:
@@ -74,7 +75,10 @@ class BasicFit:
         # Ask for the time
         self.ask_for_time()
         #
-        self.post_reservation()
+        # self.post_reservation()
+
+        import tkinter.messagebox
+        tkinter.messagebox.showinfo("Notice", "Slot available!")
 
     def ask_for_time(self):
         """ Asks the user for time """
@@ -95,7 +99,7 @@ class BasicFit:
 
     def time_unavailable(self):
         #
-        print("Timeslot is full, I will retry every 2 minutes.")
+        print("Timeslot is full, I will retry every 30 seconds.")
 
         self.pref_diff = int(input("How many slots?: "))
 
@@ -129,7 +133,7 @@ class BasicFit:
 
             timeslot = '{}:{}'.format(final.hour, str(final.minute).ljust(2, '0'))
 
-            print('Trying: {}'.format(timeslot))
+            print('Trying timeslot: {}'.format(timeslot))
 
             for basicSlot in self.times:
                 # Check if name contains
@@ -138,6 +142,7 @@ class BasicFit:
                     self.reserve_at = basicSlot
                     return True
 
+        print('All full.. Retrying in 30 seconds.')
         time.sleep(30)
 
         self.book_loop()
