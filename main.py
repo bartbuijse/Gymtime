@@ -141,7 +141,7 @@ class BasicFit:
 
             timeslot = '{}:{}'.format(final.hour, str(final.minute).ljust(2, '0'))
 
-            print('Trying timeslot: {}'.format(timeslot))
+            print('{} - Trying timeslot: {}'.format(datetime.now().strftime("%H:%M:%S"), timeslot))
 
             for basicSlot in self.times:
                 # Check if name contains
@@ -150,7 +150,7 @@ class BasicFit:
                     self.reserve_at = basicSlot
                     return True
 
-        print('All full.. Retrying in {} seconds.'.format(self.retrySeconds))
+        print('{} - All full.. Retrying in {} seconds.'.format(datetime.now().strftime("%H:%M:%S"), self.retrySeconds))
         time.sleep(self.retrySeconds)
 
         self.book_loop()
@@ -272,9 +272,14 @@ def main():
     # Parse
     args = parser.parse_args()
     # New Basic Instance
-    BasicFit(args.username,
-             args.password,
-             args.club,
+    # BasicFit(args.username,
+    #          args.password,
+    #          args.club,
+    #          args.time)
+
+    BasicFit("",
+             "",
+             "hilversum",
              args.time)
 
 
