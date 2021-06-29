@@ -245,7 +245,7 @@ class BasicFit:
         return json.dumps({
             "clubOfChoice": self.club,
             "doorPolicy": self.reserve_at,
-            "duration": 90
+            "duration": 60
         })
 
     def post_reservation(self):
