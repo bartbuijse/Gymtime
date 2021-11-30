@@ -202,6 +202,8 @@ class BasicFit:
         """ Asks the user to enter credentials """
         self.cookie = input("Cookie: ")
         self.session.headers.update({'cookie': self.cookie})
+        self.session.headers.update({'mbf-rct-app-api-2-caller': 'true'})
+        self.session.headers.update({'User-Agent': 'PostmanRuntime/7.28.4'})
 
     def get_clubs(self):
         """ Get all of the clubs of Basic Fit """
@@ -215,7 +217,7 @@ class BasicFit:
 
     def get_member(self):
         """ Get all of the clubs of Basic Fit """
-        req = self.session.get(self.member_url)
+        req = self.session.get(self.member_url, timeout=5)
         # Check for status
         if req.status_code == 200:
             self.user = req.json()
@@ -232,7 +234,7 @@ class BasicFit:
 
     def get_times(self):
         """ Get all of the clubs of Basic Fit """
-        req = self.session.post(self.times_url, self.create_times_request_body())
+        req = self.session.post(self.times_url, self.create_times_request_body(), timeout=5)
         # Check for status
         if req.status_code == 200:
             self.times = req.json()
